@@ -5,15 +5,18 @@ namespace App\Api\Job;
 use App\Domain\Job\Job;
 use Contributte\FrameX\Http\EntityResponse;
 
+/**
+ * @extends EntityResponse<array<int, array<string, mixed>>>
+ */
 class ListJobResponse extends EntityResponse
 {
 
 	/**
 	 * @param Job[] $jobs
 	 */
-	public static function of(array $jobs): EntityResponse
+	public static function of(array $jobs): self
 	{
-		$self = self::create();
+		$self = new self();
 		$self->payload = array_map(static fn (Job $job) => $job->toArray(), $jobs);
 
 		return $self;
